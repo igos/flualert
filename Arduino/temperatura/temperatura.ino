@@ -1,8 +1,19 @@
+/**
+ * HACKWAW #3
+ * FluAlert
+ * @author Igor Sawczuk
+ *                     /-ANALOG
+ *   VCC ---- Thermo -/--------- 10kOhm -- GND
+ * 
+ * VCC -> 5V
+ * GND -> GND
+ * ANALOG -> A3
+ */
+
 #include <math.h>
 #define ThermistorPIN 0                 // Analog Pin 0
 float pad = 9850;                       // balance/pad resistor value, set this to
                                         // the measured resistance of your pad resistor
-float thermr = 10000;                   // nomilana rezystancja thermistor
 
 float Thermistor(int RawADC) {
   long Resistance;  
