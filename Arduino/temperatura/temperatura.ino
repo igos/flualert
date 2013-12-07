@@ -32,8 +32,8 @@ void setup() {
 void loop() {
   float temp;
   temp=Thermistor(analogRead(ThermistorPIN));       // odczytaj
-  Serial.print("Celsius: "); 
+  Serial.print("T,"); 
   Serial.print(temp,1);                             // temperatura w st.C
-  Serial.println("");                                   
+  Serial.println();                                   
   delay(500);
 }
