@@ -19,6 +19,7 @@
 
 /* BEGIN:  HearRate Sensor - Header */
   #define LED 4//indicator, Grove - LED is connected with D4 of Arduino
+  unsigned long lastHeartRate = millis(); 
   boolean led_state = LOW;
   unsigned char counter;
   unsigned long temp[21];
@@ -51,7 +52,7 @@ void setup()
 	delay(5000);
 	arrayInit();
 	Serial.println("Heart rate test begin.");
-	attachInterrupt(0, interrupt, RISING);//set interrupt 0,digital port 2
+	//attachInterrupt(0, interrupt, RISING);//set interrupt 0,digital port 2
 /* END:  HearRate Sensor - Setup */
 }
 
@@ -64,6 +65,14 @@ void loop() {
 /* BEGIN:  Temperature Sensor - loop */
   OutputTemperature();
 /* END:  Temperature Sensor - loop */
+
+/* BEGIN:  HeartRate Sensor - loop */
+  if(millis() > lastHeartRate) {
+    interrupt();
+    lastHeartRate = millis()+600;
+  }
+/* END:  HeartRate Sensor - loop */
+
 }
 
 /* BEGIN:  Axis sensor - functions */
