@@ -26,7 +26,7 @@ int error = 0;
 void setup()
 {
   // Initialize the serial port.
-  Serial.begin(9600);
+  Serial.begin( 9600 );
 
   // Start the I2C interface.
   Wire.begin();
@@ -48,22 +48,24 @@ void loop()
   MagnetometerScaled scaled = compass.ReadScaledAxis();
 
   // Output the data via the serial port.
-  Output(scaled);
+  Output( scaled );
 
   // Normally we would delay the application by 66ms to allow the loop
   // to run at 15Hz (default bandwidth for the HMC5883L).
   // However since we have a long serial out (104ms at 9600) we will let
   // it run at its natural speed.
-  // delay(66);
+  // delay( 66 );
 }
 
 // Output the data down the serial port.
 void Output(MagnetometerScaled scaled)
 {
-   Serial.print(scaled.XAxis);
-   Serial.print(",");   
-   Serial.print(scaled.YAxis);
-   Serial.print(",");   
-   Serial.print(scaled.ZAxis);
-   Serial.println();
+  Serial.print( "A" );
+  Serial.print( "," );   
+  Serial.print( scaled.XAxis );
+  Serial.print( "," );
+  Serial.print( scaled.YAxis );
+  Serial.print( "," );
+  Serial.print( scaled.ZAxis );
+  Serial.println();
 }
