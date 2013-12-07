@@ -9,11 +9,12 @@
  * GND -> GND
  * ANALOG -> A3
  */
-
 #include <math.h>
 #define ThermistorPIN 0                 // Analog Pin 0
 float pad = 9850;                       // balance/pad resistor value, set this to
                                         // the measured resistance of your pad resistor
+unsigned long thermistorTime = 0;
+                                        
 
 float Thermistor(int RawADC) {
   long Resistance;  
@@ -30,10 +31,17 @@ void setup() {
 }
 
 void loop() {
-  float temp;
-  temp=Thermistor(analogRead(ThermistorPIN));       // odczytaj
-  Serial.print("T,"); 
-  Serial.print(temp,1);                             // temperatura w st.C
-  Serial.println();                                   
-  delay(500);
+  OutputTemperature();
+}
+
+
+void OutputTemperature() {
+  if(thermistorTime + 1000 < millis()) {
+    thermistorTime = millis();
+    float temp;
+    temp=Thermistor(analogRead(ThermistorPIN));       // odczytaj
+    Serial.print("T,"); 
+    Serial.print(temp,1);                             // temperatura w st.C
+    Serial.println();
+  }
 }
