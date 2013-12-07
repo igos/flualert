@@ -2,6 +2,12 @@
  * HACKWAW #3
  * FluAlert
  * @author Szymon P. Peplinski
+ *
+ * HMC5883L -> Arduino Uno
+ * VCC -> 3.3V
+ * GND -> GND
+ * SCL -> A5
+ * SDA -> A4
  */
 
 // Reference the I2C Library
