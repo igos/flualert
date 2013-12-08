@@ -68,7 +68,7 @@ class SiteController extends Controller
 		
 		$err=null;
 		
-		$pattern = "/^[ATH]{1}[1234]{1}[,][0-9\-.]{1,10}/i";
+		$pattern = "/^[ATH1234]{1,2}[,][0-9\-.]{1,10}/i";
 		$data=Yii::app()->request->getQuery('data','');
 		$array=explode(";", $data);
 		
@@ -135,7 +135,7 @@ class SiteController extends Controller
 	}
 	
 	/**
-	 * Clear table
+	 * Get sensor data
 	 */
 	public function actionSensor()
 	{
