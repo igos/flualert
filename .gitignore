@@ -1,4 +1,4 @@
 Backend/public/assets/*/
-Backend/public/protected/runtime/*.log
+Backend/public/protected/runtime/*.log*
 Backend/public/protected/data/*.sqlite
 .htaccess

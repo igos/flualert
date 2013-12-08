@@ -26,7 +26,7 @@ int error = 0;
 void setup()
 {
   // Initialize the serial port.
-  Serial.begin( 9600 );
+  Serial.begin( 19200 );
 
   // Start the I2C interface.
   Wire.begin();
@@ -60,7 +60,7 @@ void loop()
 // Output the data down the serial port.
 void Output(MagnetometerScaled scaled)
 {
-  Serial.print( "A" );
+  Serial.print( "A4" );
   Serial.print( "," );   
   Serial.print( scaled.XAxis );
   Serial.print( "," );

@@ -68,24 +68,164 @@ class SiteController extends Controller
 		
 		$err=null;
 		
+		$pattern = "/^[ATH]{1}[1234]{1}[,][0-9\-.]{1,10}/i";
+		$data=Yii::app()->request->getQuery('data','');
+		$array=explode(";", $data);
+		
 		try
 		{
 			$connection=Yii::app()->db;
-			$connection->createCommand(
-				"INSERT INTO tbl_axis (id, time, x, y, z) VALUES ( :sensorId, :time, :x, :y, :z )"
-			)->execute(
-				array(
-					':sensorId'=>1,
-					':time'=>3,
-					':x'=>2.23,
-					':y'=>3.34,
-					':z'=>4.34,
-				)
-			);
+			$transaction=$connection->beginTransaction();
+			
+			foreach($array as $value)
+			{
+			    if(preg_match($pattern,$value)) // use only valid records.
+				{
+					$values=explode(",",$value);
+					$type = substr($values[0],0,1);
+					$id = intval(substr($values[0],1,1));
+					$x = $values[1];
+					//echo $type.' '.$id.' '.$x."\n";
+					
+					$tbl=null;
+					if($type=='A')
+					{
+						$tbl='tbl_axis';
+					}
+					elseif($type=='T')
+					{
+						$tbl='tbl_temperature';
+					}
+					elseif($type=='H')
+					{
+						$tbl='tbl_heartrate';
+					}
+					
+					if(isset($tbl)&&!empty($tbl))
+					{
+						$connection->createCommand(
+							"INSERT INTO $tbl (id, time, x) VALUES ( :sensorId, :time, :x )"
+						)->execute(
+							array(
+								':sensorId'=>$id,
+								':time'=>null,
+								':x'=>$x,
+							)
+						);
+					}
+				}
+			}
+			
+			$transaction->commit();
+		}
+		catch( Exception $e )
+		{
+			$transaction->rollback();
+			$err=serialize( $e );
+		}
+		
+		$arr=array(
+			'err'=>$err,
+		);
+		
+		header('Content-type: application/json');
+		echo CJavaScript::jsonEncode($arr);
+		
+		Yii::app()->end();
+	}
+	
+	/**
+	 * Clear table
+	 */
+	public function actionSensor()
+	{
+		$this->layout=false;
+		
+		$type=Yii::app()->request->getQuery('type','');
+		if($type=='A')
+		{
+			$tbl='tbl_axis';
+		}
+		elseif($type=='T')
+		{
+			$tbl='tbl_temperature';
+		}
+		elseif($type=='H')
+		{
+			$tbl='tbl_heartrate';
+		}
+		
+		$err=null;
+		
+		try
+		{
+			$connection=Yii::app()->db;
+			$row = $connection->createCommand( 
+				"SELECT value FROM $tbl ORDER BY idx DESC LIMIT 1;"
+			)->queryRow();
 		}
 		catch( Exception $e )
 		{
 			$err=serialize( $e );
+		}
+		;
+		
+		if( isset($err)&&!empty($err) )
+		{
+			$arr=array(
+				'err'=>$err,
+			);
+		}
+		else
+		{
+			$arr=array(
+				'value'=>$row[ 'value' ],
+			);
+		}
+		
+		header('Content-type: application/json');
+		echo CJavaScript::jsonEncode($arr);
+		
+		Yii::app()->end();
+	}
+	
+	/**
+	 * Clear table
+	 */
+	public function actionClear()
+	{
+		$this->layout=false;
+		
+		$err=null;
+		
+		$type=Yii::app()->request->getQuery('type','');
+		if($type=='A')
+		{
+			$tbl='tbl_axis';
+		}
+		elseif($type=='T')
+		{
+			$tbl='tbl_temperature';
+		}
+		elseif($type=='H')
+		{
+			$tbl='tbl_heartrate';
+		}
+		
+		if(isset($tbl)&&!empty($tbl))
+		{
+			try
+			{
+				$connection=Yii::app()->db;
+				$transaction=$connection->beginTransaction();
+				$connection->createCommand( "DELETE FROM $tbl" )->execute();
+				$transaction->commit();
+			}
+			catch( Exception $e )
+			{
+				$transaction->rollback();
+				$err=serialize( $e );
+			}
 		}
 		
 		$arr=array(
