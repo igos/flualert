@@ -19,7 +19,7 @@
                         setInterval(function() {
                             $.ajax({
 								async: false,
-								url: "http://localhost/Hackwaw/FluAlert/Backend/public/site/sensor?type=T",
+								url: "//Hackwaw/FluAlert/Backend/public/site/sensor?type=T",
 								type: "GET",
 								success: function (msg) 
 								{
@@ -109,7 +109,7 @@
                         setInterval(function() {
 							$.ajax({
 								async: false,
-								url: "http://localhost/Hackwaw/FluAlert/Backend/public/site/sensor?type=H",
+								url: "//localhost/Hackwaw/FluAlert/Backend/public/site/sensor?type=H",
 								type: "GET",
 								dataType: "json",
 								contentType: "text/plain; charset=utf-8",
