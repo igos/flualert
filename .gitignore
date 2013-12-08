@@ -1,0 +1,3 @@
+Backend/public/assets/*
+Backend/public/protected/runtime/*
+.htaccess
