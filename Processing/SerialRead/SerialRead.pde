@@ -4,52 +4,62 @@
  * @author Szymon P. Peplinski
  */
 import processing.serial.*;
+import com.francisli.processing.http.*;
+ 
+HttpClient client;
 
-int inByte = 10;    // Linefeed in ASCII
-String myString = null;
-Serial myPort;  // The serial port
+Serial serialDevice1;  // Create object from Serial class
+String val;      // Data received from the serial port
 
-void setup()
+String hostName = "localhost";
+int interval = 50;
+ArrayList<String> data;
+
+void setup() 
 {
-  // List all the available serial ports
+  data = new ArrayList<String>();
+  
+  client = new HttpClient( this, hostName );
+  
   println( Serial.list() );
   
-  // Open the port you are using at the rate you want:
-  myPort = new Serial( this, Serial.list()[ 2 ], 9600 );
-  myPort.clear();
-  
-  // Throw out the first reading, in case we started reading 
-  // in the middle of a string from the sender.
-  byte temp[] = myPort.readBytesUntil( inByte );
-  if( temp == null ) 
-  {
-    myString = null;
-  }
-  else
-  {
-    myString = new String( temp );
-  }
-  
-  myString = null;
+  String sensorName1 = Serial.list()[ 4 ];
+  serialDevice1 = new Serial( this, sensorName1, 9600 );
+  serialDevice1.clear();
 }
 
 void draw()
 {
-  while( myPort.available() > 0 )
+  if ( serialDevice1.available() > 0 ) // If data is available
   {
-    byte temp[] = myPort.readBytesUntil( inByte );
-    if( temp == null ) 
+    val = serialDevice1.readStringUntil('\n');
+    if( val != null )
     {
-      myString = null;
-    }
-    else
-    {
-      myString = new String( temp );
-    }
-    
-    if( myString != null )
-    {
-      println( myString );
+      String s = val.substring( 0, val.length() - 1 );
+      //println( s );
+      data.add( s );
     }
   }
+  
+  if( data.size() > interval )
+  {
+    String joinedArray = "";
+    for( String s : data )
+    {
+      joinedArray += s + ";";
+    }
+    
+    data.clear();
+    //println( joinedArray );
+    
+    HashMap params = new HashMap();
+    params.put( "data", joinedArray );
+    client.GET( "php/sensor.php", params );
+  }
+}
+
+void responseReceived( HttpRequest request, HttpResponse response )
+{
+  // print the json response as a string
+  println( response.getContentAsString() );
 }
