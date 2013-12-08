@@ -41,7 +41,7 @@ return array(
 			'basePath'=>null,
 		),
 		'db'=>array(
-			'connectionString'=>'sqlite:/wwwroot/blog/protected/data/blog.db',
+			'connectionString'=>'sqlite:/Projects/Hackwaw/FluAlert/Backend/public/protected/data/db.sqlite',
 			'emulatePrepare'=>true,
 			'tablePrefix'=>'tbl_',
 			'charset'=>'utf8',
