@@ -104,12 +104,12 @@ class SiteController extends Controller
 					if(isset($tbl)&&!empty($tbl))
 					{
 						$connection->createCommand(
-							"INSERT INTO $tbl (id, time, x) VALUES ( :sensorId, :time, :x )"
+							"INSERT INTO $tbl (id, time, value) VALUES ( :sensorId, :time, :value )"
 						)->execute(
 							array(
 								':sensorId'=>$id,
 								':time'=>null,
-								':x'=>$x,
+								':value'=>$x,
 							)
 						);
 					}
