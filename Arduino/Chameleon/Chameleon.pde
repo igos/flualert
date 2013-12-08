@@ -10,6 +10,7 @@ HttpClient client;
 
 Serial serialDevice1;  // Create object from Serial class
 Serial serialDevice2;  // Create object from Serial class
+Serial serialDevice3;  // Create object from Serial class
 
 String val;      // Data received from the serial port
 
@@ -32,15 +33,20 @@ void setup()
   
   println( Serial.list() );
   
-  String sensorName1 = Serial.list()[ 4 ];
+  String sensorName1 = Serial.list()[ 6 ];
   serialDevice1 = new Serial( this, sensorName1, 19200 );
   serialDevice1.bufferUntil(10);
   serialDevice1.clear();
   
-  String sensorName2 = Serial.list()[ 6 ];
+  String sensorName2 = Serial.list()[ 8 ];
   serialDevice2 = new Serial( this, sensorName2, 19200 );
   serialDevice2.bufferUntil(10);
   serialDevice2.clear();
+  
+  String sensorName3 = Serial.list()[ 10 ];
+  serialDevice3 = new Serial( this, sensorName3, 19200 );
+  serialDevice3.bufferUntil(10);
+  serialDevice3.clear();
 }
 
 void draw()
@@ -61,15 +67,8 @@ void draw()
       if( s.length() > 3 )
       {
         s = s.substring( 3 );
-        
         i1 = int( s.charAt( 0 ) ) == 48 ? 0 : 1;
-        
-        //println( s );
-        //println( i1 );
-        //println();
-        
       }
-      //data.add( s );
     }
   }
   
@@ -79,21 +78,29 @@ void draw()
     if( val != null )
     {
       String s = val.substring( 0, val.length() - 1 );
-      
       if( s.length() > 3 )
       {
         s = s.substring( 3 );
-        
         i2 = int( s.charAt( 0 ) ) == 48 ? 0 : 1;
-        
-        //println( s );
-        //println( i1 );
-        //println();
       }
     }
   }
   
-  int sum = i1 + i2;
+  if ( serialDevice3.available() > 0 ) // If data is available
+  {
+    val = serialDevice3.readStringUntil('\n');
+    if( val != null )
+    {
+      String s = val.substring( 0, val.length() - 1 );
+      if( s.length() > 3 )
+      {
+        s = s.substring( 3 );
+        i3 = int( s.charAt( 0 ) ) == 48 ? 0 : 1;
+      }
+    }
+  }
+  
+  int sum = i1 + i2 + i3;
   
   if( sum == 3 )
   {
@@ -127,7 +134,8 @@ void draw()
 
 void update( int v )
 {
-  r = r + v * 0.2;
+  r = r + v * 0.1;
+  r = min( r, 50 );
 }
 
 void responseReceived( HttpRequest request, HttpResponse response )
