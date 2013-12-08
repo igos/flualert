@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Grids - jQuery Mobile Demos</title>
+	<link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.3.2.min.css">
+	<link rel="stylesheet" href="_assets/css/jqm-demos.css">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<script src="js/jquery.js"></script>
+	<!-- <script src="_assets/js/index.js"></script> -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<script src="graph.js"></script>
+	<style>
+	@font-face
+	{
+	font-family: roboto;
+	src: url('Roboto-Thin.ttf')
+	}
+	@font-face
+	{
+	font-family: roboto-bold;
+	src: url('Roboto-Regular.ttf')
+	}
+	.headLine {
+		font-family: roboto;
+		background-color:white;
+		width:700px;
+		font-size:18pt;
+		padding-top:30px;
+		padding-left:10px;
+		padding-right:10px;
+		padding-bottom:10px;
+	}
+	.headLine span {
+		float:right;
+		color:red;
+		font-size:24pt;
+		font-family: roboto-bold;
+	}
+	</style>
+	
+</head>
+<body>
+<div data-role="page" class="jqm-demos" data-quicklinks="true">
+	
+	
+	
+
+	<div data-role="content" class="jqm-content">
+			<div>
+			<img style="margin-top:0;margin-bottom:-5px;padding:0;" src="header.png" />
+			</div>
+			<div>
+			<img style="margin-top:-5px;margin-bottom:-5px;padding:0;" src="profile.png" />
+			</div>
+			<div>
+			<img style="margin-top:-5px;margin-bottom:-5px;padding:0;" src="alert.png" />
+			</div>
+			<div class="headLine">Temperature <span id="graphTempValue">12</span></div>
+			<div id="graphTemp" style="max-width: 720px; height: 198px;"></div>
+			<div class="headLine">Heart rate <span id="graphHeartrateValue">21</span></div>
+			<div id="graphHeartrate" style="max-width: 720px; height: 198px;"></div>
+	</div><!-- /content -->
+
+
+</div><!-- /page -->
+</body>
+</html>
