@@ -179,5 +179,5 @@
 });
 
 function FormatNumberLength(num, length) {
-    return num.toPrecision(3);
+    return parseInt(num).toPrecision(3);
 }
