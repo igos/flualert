@@ -54,7 +54,7 @@ void draw()
     
     HashMap params = new HashMap();
     params.put( "data", joinedArray );
-    client.GET( "php/sensor.php", params );
+    client.GET( "php/get_sensor.php", params );
   }
 }
 
