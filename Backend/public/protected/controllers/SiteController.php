@@ -58,4 +58,43 @@ class SiteController extends Controller
 		echo CJavaScript::jsonEncode($arr);
 		Yii::app()->end();
 	}
+	
+	/**
+	 * Test insert
+	 */
+	public function actionInsert()
+	{
+		$this->layout=false;
+		
+		$err=null;
+		
+		try
+		{
+			$connection=Yii::app()->db;
+			$connection->createCommand(
+				"INSERT INTO tbl_axis (id, time, x, y, z) VALUES ( :sensorId, :time, :x, :y, :z )"
+			)->execute(
+				array(
+					':sensorId'=>1,
+					':time'=>3,
+					':x'=>2.23,
+					':y'=>3.34,
+					':z'=>4.34,
+				)
+			);
+		}
+		catch( Exception $e )
+		{
+			$err=serialize( $e );
+		}
+		
+		$arr=array(
+			'err'=>$err,
+		);
+		
+		header('Content-type: application/json');
+		echo CJavaScript::jsonEncode($arr);
+		
+		Yii::app()->end();
+	}
 }

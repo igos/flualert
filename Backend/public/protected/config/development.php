@@ -7,7 +7,6 @@ return CMap::mergeArray(
 			'db'=>array(
 				'connectionString'=>'sqlite:/Projects/CreativeCoding/FluAlert/Backend/public/protected/data/db.sqlite',
 				'emulatePrepare'=>true,
-				'tablePrefix'=>'tbl_',
 				'charset'=>'utf8',
 			),
 		),

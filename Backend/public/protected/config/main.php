@@ -43,7 +43,6 @@ return array(
 		'db'=>array(
 			'connectionString'=>'sqlite:/Projects/Hackwaw/FluAlert/Backend/public/protected/data/db.sqlite',
 			'emulatePrepare'=>true,
-			'tablePrefix'=>'tbl_',
 			'charset'=>'utf8',
 		),
 		'errorHandler'=>array(

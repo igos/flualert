@@ -1,3 +1,7 @@
+==== Permitions ====
+Set dir mode to 777
+
+
 ==== DB Structure ====
 
 sqlite3 db.sqlite;
