@@ -26,7 +26,7 @@
 								success: function (msg) 
 								{
 									 var x = (new Date()).getTime(), // current time
-									 y = FormatNumberLength(msg.value,2);
+									 y = parseInt(FormatNumberLength(msg.value,2),10);
 									 series.addPoint([x, y], true, true);
 									 $("#graphTempValue").text(y);
 								}
@@ -118,7 +118,7 @@
 								success: function (msg) 
 								{
 									 var x = (new Date()).getTime(), // current time
-									 y = FormatNumberLength(msg.value,2);
+									  y = parseInt(FormatNumberLength(msg.value,2),10);
 									 series.addPoint([x, y], true, true);
 									 $("#graphHeartrateValue").text(y);
 								}
