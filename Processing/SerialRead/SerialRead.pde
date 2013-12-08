@@ -9,6 +9,8 @@ import com.francisli.processing.http.*;
 HttpClient client;
 
 Serial serialDevice1;  // Create object from Serial class
+Serial serialDevice2;  // Create object from Serial class
+
 String val;      // Data received from the serial port
 
 String hostName = "localhost";
@@ -54,7 +56,7 @@ void draw()
     
     HashMap params = new HashMap();
     params.put( "data", joinedArray );
-    client.GET( "php/get_sensor.php", params );
+    client.GET( "/Hackwaw/FluAlert/Backend/public/site/insert", params );
   }
 }
 
