@@ -1,4 +1,6 @@
 	$(function () {
+		$("#alert").hide();
+	
     $(document).ready(function() {
         Highcharts.setOptions({
             global: {
@@ -177,7 +179,14 @@
     });
     
 });
-
+function checkAlert() {
+	var heart = parseInt($("#graphTempValue").text());
+	var temp = parseInt($("#graphTempValue").text());
+	
+	if(temp > 30 && heart > 100) {
+		$("#alert").show();
+	}
+}
 function FormatNumberLength(num, length) {
     return parseInt(num).toPrecision(3);
 }
